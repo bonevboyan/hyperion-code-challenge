@@ -1,0 +1,16 @@
+services:
+  crypto-mcp:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - COINMARKETCAP_API_KEY=${COINMARKETCAP_API_KEY}
+      - TAAPI_API_KEY=${TAAPI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
