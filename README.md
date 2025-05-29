@@ -40,7 +40,8 @@ packages/
 │   └── README.md      # Server documentation
 │
 └── mcp-client/        # Client application
-    ├── index.ts/
+    ├── src/
+    │   └── index.ts   # Client implementation
     └── README.md      # Client documentation
 ```
 
