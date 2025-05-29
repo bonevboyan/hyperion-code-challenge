@@ -2,6 +2,10 @@
 
 An HTTP server that exposes cryptocurrency market analysis tools through the Model-Consumer-Provider (MCP) protocol. This server integrates with the `crypto-analysis-mcp` package to provide technical analysis and market regime classification.
 
+## Deployment
+
+This service is currently running at https://hyperion-mcp-http.onrender.com.
+
 ## Features
 
 - **HTTP Endpoint**: Exposes an `/mcp` endpoint for MCP protocol interactions
@@ -32,9 +36,8 @@ An HTTP server that exposes cryptocurrency market analysis tools through the Mod
 npm install
 ```
 
-2. Create a `.env` file:
+2. Create a `.env` file using the `.env.sample` and add your API keys:
 ```env
-PORT=3000
 TAAPI_API_KEY=your_taapi_api_key
 COINMARKETCAP_API_KEY=your_cmc_api_key
 OPENAI_API_KEY=your_openai_api_key
@@ -79,18 +82,6 @@ The server exposes a single endpoint:
      - Technical indicators
      - Market regime classification (Trending Up/Down/Ranging)
 
-## Example Request
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "analyze_market_regime",
-  "params": {
-    "symbol": "BTC"
-  },
-  "id": 1
-}
-```
 
 ## Environment Variables
 
@@ -114,7 +105,3 @@ The server exposes a single endpoint:
 - `@modelcontextprotocol/sdk` - MCP protocol implementation
 - `express` - HTTP server framework
 - `dotenv` - Environment variable management
-
-## License
-
-MIT License 

@@ -25,7 +25,7 @@ A command-line interface for analyzing cryptocurrency market regimes for the pas
 npm install
 ```
 
-2. Create a `.env` file with your API keys:
+2. Create a `.env` file using the `.env.sample` and add your API keys:
 ```env
 TAAPI_API_KEY=your_taapi_api_key
 COINMARKETCAP_API_KEY=your_cmc_api_key
@@ -39,9 +39,40 @@ OPENAI_API_KEY=your_openai_api_key
 npm run build
 ```
 
-2. Start the service:
-```bash
-npm start
+2. Edit the `claude_desktop_config.json` for your Claude Desktop with the following setup:
+```json
+{
+  "mcpServers": {
+    "crypto-analysis": {
+      "command": "node",
+      "args": ["path/to/dist/index.js"],
+      "env": {
+        "OPENAI_API_KEY": "your_api_key",
+        "TAAPI_API_KEY": "your_api_key",
+        "COINMARKETCAP_API_KEY": "your_api_key"
+      }
+    }
+  }
+}
+```
+
+Alternatively, you could use the already uploaded npm package: https://www.npmjs.com/package/crypto-analysis-mcp
+
+The `claude_desktop_config.json` would then look like this:
+```json
+{
+  "mcpServers": {
+    "crypto-analysis": {
+      "command": "npx",
+      "args": ["crypto-analysis-mcp"],
+      "env": {
+        "OPENAI_API_KEY": "your_api_key",
+        "TAAPI_API_KEY": "your_api_key",
+        "COINMARKETCAP_API_KEY": "your_api_key"
+      }
+    }
+  }
+}
 ```
 
 ## Response Format
@@ -80,14 +111,6 @@ interface MarketAnalysis {
   };
 }
 ```
-
-## Error Handling
-
-The service includes comprehensive error handling for:
-- API failures (TAAPI, CoinMarketCap, OpenAI)
-- Missing or invalid data
-- Network connectivity issues
-- Invalid cryptocurrency symbols
 
 ## Scripts
 

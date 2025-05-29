@@ -1,130 +1,67 @@
-# Hyperion Crypto Analysis
+# Hyperion Code Challenge
 
-A comprehensive cryptocurrency market analysis solution consisting of two packages:
-- A reusable analysis library (`crypto-analysis-mcp`)
-- An HTTP server that exposes the analysis tools (`mcp-http`)
+This project implements a Market Classification Protocol (MCP) server in two different ways to demonstrate flexibility and modularity in design. It also includes a small client application as a proof of concept of how to use the deployed HTTP service.
+
+## Project Overview
+
+The repository consists of three main packages:
+
+1. `mcp-stdio` - A core library package that implements the MCP protocol logic:
+   - Published as `crypto-analysis-mcp` on npm
+   - Can be integrated into any Node.js application
+   - Uses standard input/output for communication
+   - Perfect for applications needing direct protocol integration
+   - [Detailed Documentation](packages/mcp-stdio/README.md)
+
+2. `mcp-http` - A standalone HTTP server that exposes the MCP functionality:
+   - Built on top of the `mcp-stdio` package
+   - Provides a RESTful API interface
+   - Containerized with Docker
+   - Ideal for microservices and web-based integrations
+   - [Detailed Documentation](packages/mcp-http/README.md)
+
+3. `mcp-client` - A proof-of-concept client:
+   - Demonstrates how to interact with the HTTP service
+   - [Detailed Documentation](packages/mcp-client/README.md)
 
 ## Project Structure
 
 ```
 packages/
-├── mcp-stdio/          # Core analysis package (published as crypto-analysis-mcp)
+├── mcp-stdio/          # Core MCP implementation (published as crypto-analysis-mcp)
 │   ├── src/
 │   │   ├── services/  # Analysis and price services
-│   │   └── index.ts   # MCP server implementation
+│   │   └── index.ts   # MCP protocol implementation
 │   └── README.md      # Package documentation
 │
-└── mcp-http/          # HTTP server implementation
-    ├── src/
-    │   └── index.ts   # Express server with MCP endpoint
-    └── README.md      # Server documentation
+├── mcp-http/          # HTTP server wrapper
+│   ├── src/
+│   │   └── index.ts   # Express server with MCP endpoint
+│   └── README.md      # Server documentation
+│
+└── mcp-client/        # Client application
+    ├── index.ts/
+    └── README.md      # Client documentation
 ```
 
 ## Features
 
 ### Core Analysis Package (`crypto-analysis-mcp`)
+- Uploaded to npm: https://www.npmjs.com/package/crypto-analysis-mcp
 - Real-time cryptocurrency price data from CoinMarketCap
 - Comprehensive technical analysis using TAAPI.io:
   - RSI, MACD, Bollinger Bands, ATR
   - Stochastic Oscillator (14,3)
   - SMA and EMA (20-period)
 - AI-powered market regime classification using GPT-4
-- Published on npm as `crypto-analysis-mcp`
+- Transport-agnostic design for maximum flexibility
 
 ### HTTP Server (`mcp-http`)
-- RESTful endpoint for MCP protocol interactions
+- Deployed as a service: https://hyperion-mcp-http.onrender.com
+- RESTful API wrapper around the core MCP implementation
 - Docker support for easy deployment
 - Built on Express.js
-- Integrates the core analysis package
+- Example of how to integrate the core package in a web service
 
-## Quick Start
-
-### Using the Analysis Package
-
-1. Install the package:
-```bash
-npm install crypto-analysis-mcp
-```
-
-2. Use in your code:
-```typescript
-import { getServer } from 'crypto-analysis-mcp';
-
-const server = getServer();
-// Connect to your transport of choice
-```
-
-### Running the HTTP Server
-
-1. Navigate to the server package:
-```bash
-cd packages/mcp-http
-```
-
-2. Create a `.env` file:
-```env
-PORT=3000
-TAAPI_API_KEY=your_taapi_api_key
-COINMARKETCAP_API_KEY=your_cmc_api_key
-OPENAI_API_KEY=your_openai_api_key
-```
-
-3. Run with Docker:
-```bash
-docker-compose up --build
-```
-
-Or run locally:
-```bash
-npm install
-npm run dev
-```
-
-## API Usage
-
-Send POST requests to `/mcp` with MCP protocol messages:
-
-```json
-{
-  "jsonrpc": "2.0",
-  "method": "analyze_market_regime",
-  "params": {
-    "symbol": "BTC"
-  },
-  "id": 1
-}
-```
-
-## Available Tools
-
-1. `get_crypto_price`: Get current cryptocurrency prices
-2. `analyze_market_regime`: Full market analysis with:
-   - Current price
-   - Technical indicators
-   - Market regime classification
-
-## Development
-
-### Prerequisites
-- Node.js 20 or higher
-- npm or yarn
-- Docker (optional)
-- API keys for TAAPI.io, CoinMarketCap, and OpenAI
-
-### Setup
-```bash
-# Install dependencies for both packages
-cd packages/mcp-stdio && npm install
-cd ../mcp-http && npm install
-```
-
-### Building
-```bash
-# Build the core package
-cd packages/mcp-stdio
-npm run build
-
-# Build the HTTP server
-cd ../mcp-http
-npm run build
-```
+### Web Client (`mcp-client`)
+- Example implementation of MCP protocol client
