@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mcp-http:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - TAAPI_API_KEY=${TAAPI_API_KEY}
+      - COINMARKETCAP_API_KEY=${COINMARKETCAP_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    restart: unless-stopped
